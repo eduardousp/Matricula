@@ -16,5 +16,6 @@ namespace matricula.infra.Repositories
         void Remove(T item);
         void Edit(T item);
         void Dispose();
+        void AddRange(IEnumerable<T> item);
     }
 }

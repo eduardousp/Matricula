@@ -40,6 +40,11 @@ namespace matricula.infra.Repositories
             _context.Set<T>().Add(item);
         }
 
+        public void AddRange(IEnumerable<T> item)
+        {
+            _context.Set<T>().AddRange(item);
+        }
+
         public void Remove(T item)
         {
             _context.Set<T>().Remove(item);

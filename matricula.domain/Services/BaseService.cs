@@ -34,6 +34,12 @@ namespace matricula.domain.Services
             unitOfWork.Save();
         }
 
+        public void AddRange(IEnumerable<T> item)
+        {
+            _repository.AddRange(item);
+            unitOfWork.Save();
+        }
+
         public void Remove(T item)
         {
             _repository.Remove(item);

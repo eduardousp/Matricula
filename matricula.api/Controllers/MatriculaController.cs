@@ -2,9 +2,14 @@
 using matricula.infra.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 
@@ -15,8 +20,12 @@ namespace matricula.api.Controllers
     public class MatriculaController : ControllerBase
     {
         IAlunoService _service;
-
-        public MatriculaController() { _service=new AlunoService(); }
+      
+        public MatriculaController() 
+        { 
+            _service=new AlunoService();
+   
+        }
         // GET: api/<MatriculaController>
         [HttpGet]
         public IEnumerable<Aluno> Get()
@@ -47,8 +56,14 @@ namespace matricula.api.Controllers
 
         // DELETE api/<MatriculaController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Aluno aluno)
         {
+            _service.Remove(aluno);
         }
+        //[HttpDelete("{id}")]
+        //public void DeleteAll()
+        //{
+        //    _service.rem.Remove();
+        //}
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 
 namespace matricula.domain.Services
@@ -11,5 +12,6 @@ namespace matricula.domain.Services
         void Remove(T item);
         void Edit(T item);
         void Dispose();
+        void AddRange(IEnumerable<T> item);
     }
 }
