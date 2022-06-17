@@ -1,6 +1,8 @@
 ﻿using matricula.domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,87 +10,34 @@ using System.Threading.Tasks;
 
 namespace InsereAluno.Controllers
 {
+    
     public class AlunoController : Controller
     {
-        IAlunoService _service;
-        public AlunoController()
+        private readonly IInserirAluno _inserirAluno;
+        public AlunoController(IInserirAluno hostedService) 
         {
-            _service = new AlunoService();
-
-        }
+            _inserirAluno = hostedService;
+         }
         // GET: MatriculaController
         public ActionResult Index()
         {
             return View();
         }
-
-        // GET: MatriculaController/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            return View(_service.List());
-        }
-
-        // GET: MatriculaController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: MatriculaController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<object> Index(IFormCollection collection)
         {
-            try
+            var tempo = Convert.ToUInt16(collection["tempo"].ToString())*1000;
+            if (_inserirAluno.IsRunning())
             {
-                return RedirectToAction(nameof(Index));
+                _inserirAluno.StopAsync(new System.Threading.CancellationToken());
             }
-            catch
-            {
-                return View();
-            }
+            _inserirAluno.SetaTimer(tempo);
+            await _inserirAluno.StartAsync(new System.Threading.CancellationToken());
+
+            return View("Index");
         }
 
-        // GET: MatriculaController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+    
 
-        // POST: MatriculaController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MatriculaController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MatriculaController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

@@ -53,6 +53,7 @@ namespace matricula.infra.Repositories
         public void Edit(T item)
         {
             _context.Entry(item).State = EntityState.Modified;
+           
         }
 
         public void Dispose()

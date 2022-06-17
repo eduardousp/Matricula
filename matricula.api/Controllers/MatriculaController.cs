@@ -50,8 +50,14 @@ namespace matricula.api.Controllers
 
         // PUT api/<MatriculaController>/5
         [HttpPut("{id}")]
-        public void Put(Aluno aluno)
+        public  void Put(long id, Aluno aluno)
         {
+            if (id == aluno.Id)
+            {
+                _service.Edit(aluno);
+            }        
+                     
+            
         }
 
         // DELETE api/<MatriculaController>/5
